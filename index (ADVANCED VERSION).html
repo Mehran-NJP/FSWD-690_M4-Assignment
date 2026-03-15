@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Assignment 04</title>
+</head>
+<body>
+
+  <div style="display: flex; flex-direction: column; gap: 8px;">
+    <button onclick="queueAndReload('js/01-coinflip-redux.js')">Part 1 — Coin Flip Redux</button>
+    <button onclick="queueAndReload('js/02-coinflip-streak.js')">Part 2 — Coin Flip Streak</button>
+    <button onclick="queueAndReload('js/03-triangle.js')">Part 3 — Looping a Triangle</button>
+    <button onclick="queueAndReload('js/04-odd-or-even.js')">Part 4 — Odd or Even</button>
+    <button onclick="queueAndReload('js/05-marco-polo.js')">Part 5 — Marco! Polo!</button>
+    <button onclick="queueAndReload('js/06-countdown.js')">Part 6 — Countdown</button>
+  </div>
+
+  <script>
+    // When a button is clicked: remember which script to run, then refresh.
+    function queueAndReload(src) {
+      sessionStorage.setItem('pendingScript', src);
+      location.reload();
+    }
+
+    // After refresh: if a script was queued, load and run it, then clear the queue.
+    window.addEventListener('DOMContentLoaded', () => {
+      const src = sessionStorage.getItem('pendingScript');
+      if (src) {
+        sessionStorage.removeItem('pendingScript');
+        const s = document.createElement('script');
+        s.src = src + '?t=' + Date.now(); // cache-buster to force execution
+        document.body.appendChild(s);
+      }
+    });
+  </script>
+</body>
+</html>
